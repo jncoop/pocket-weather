@@ -1,14 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { TabNavigator } from "./navigation/TabNavigator";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Config setup</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  // return <Text>HEllo</Text>;
+  return <TabNavigator />;
 }
 
 const styles = StyleSheet.create({
