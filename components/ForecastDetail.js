@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 export const ForecastDetail = () => {
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Text style={styles.text}> Forecast Detail</Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text style={styles.text}> Forecast Detail</Text>
+    </View>
   );
 };
 

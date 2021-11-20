@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Text, View, StyleSheet, SafeAreaView, Button } from "react-native";
+import { WeeklyForecast } from "../components/WeeklyForecast";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -9,6 +10,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.text}> Home Screen</Text>
+        <WeeklyForecast />
       </View>
     </SafeAreaView>
   );
