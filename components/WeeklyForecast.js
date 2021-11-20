@@ -7,6 +7,7 @@ import {
   FlatList,
 } from "react-native";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
+import { ForecastCell } from "./ForecastCell";
 export const WeeklyForecast = () => {
   const tempLat = "52.2823";
   const tempLong = "1.5849";
@@ -35,26 +36,20 @@ export const WeeklyForecast = () => {
   }, []);
 
   return (
-    <View style={{ padding: 24 }}>
+    <View style={styles.container}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           data={forecastData.daily}
           keyExtractor={(item) => item.dt}
-          renderItem={({ item }) => <Text>{item.clouds}</Text>}
+          renderItem={({ item, index }) => (
+            <ForecastCell item={item} id={index} />
+          )}
         />
       )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  text: {
-    fontSize: 14,
-  },
-});
+const styles = StyleSheet.create({});

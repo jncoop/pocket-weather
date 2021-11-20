@@ -7,12 +7,3 @@ export default function App() {
   // return <Text>HEllo</Text>;
   return <TabNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -3,9 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { HomeNavStack } from "./HomeStack";
 import { CitiesNavStack } from "./CitiesStack";
-import { Image, StyleSheet } from "react-native";
-import homeIcon from "../assets/hometab.png";
-import citiesIcon from "../assets/citiestab.png";
+import { StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const TabNavigator = () => {

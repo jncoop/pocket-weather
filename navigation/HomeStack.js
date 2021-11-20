@@ -29,7 +29,7 @@ export const HomeNavStack = () => {
         <HomeStack.Screen
           name="Place Picker"
           component={PlacePicker}
-          options={{ headerShown: true }}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
       </HomeStack.Group>
     </HomeStack.Navigator>
