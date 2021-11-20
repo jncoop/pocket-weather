@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
+import { setPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 
 export const PlacePickerScreen = () => {
@@ -20,6 +21,11 @@ export const PlacePickerScreen = () => {
   const [searchTerm, onChangeText] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [placesData, setPlacesResults] = useState([]);
+
+  const savePreferredPlace = (place) => {
+    setPrefPlace(place);
+    navigation.goBack();
+  };
 
   const getGeoCode = async (location) => {
     setLoading(true);
@@ -48,7 +54,9 @@ export const PlacePickerScreen = () => {
             <FlatList
               data={placesData}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => <SearchPlaceCell item={item} />}
+              renderItem={({ item, index }) => (
+                <SearchPlaceCell item={item} callBack={savePreferredPlace} />
+              )}
               style={styles.resultsList}
             />
           )}
