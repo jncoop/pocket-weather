@@ -10,7 +10,9 @@ export const ForecastCell = ({ item, id }) => {
     <TouchableOpacity
       style={styles.container}
       key={id}
-      onPress={() => navigation.navigate("Place Picker", { details: item })}
+      onPress={() =>
+        navigation.navigate("Forecast Details", { forecast: item })
+      }
     >
       <View style={styles.dayContainer}>
         <Image

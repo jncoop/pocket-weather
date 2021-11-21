@@ -15,20 +15,20 @@ import { SearchPlaceCell } from "../components/SearchPlaceCell";
 import { setPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 
-export const PlacePickerScreen = ({ route, navigation }) => {
-  // const navigation = useNavigation();
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-  if (route) console.log("place picker screen ", route.params);
+export const PlacePickerScreen = ({ route }) => {
+  const navigation = useNavigation();
 
   const [searchTerm, onChangeText] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [placesData, setPlacesResults] = useState([]);
 
-  const savePreferredPlace = (place) => {
-    setPrefPlace(place);
-    console.log("save pref place ", place, route.params.placeHandler);
-    route.params.placeHandler(place);
-    navigation.goBack();
+  const updatePrefLocation = (location) => {
+    AsyncStorage.setItem("@prefLocation", JSON.stringify(location), (err) => {
+      if (err) return;
+      navigation.goBack();
+    });
   };
 
   const getGeoCode = async (location) => {
@@ -62,7 +62,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
                 <SearchPlaceCell
                   place={item.name + ", " + item.country}
                   item={item}
-                  callBack={savePreferredPlace}
+                  callBack={updatePrefLocation}
                 />
               )}
               style={styles.resultsList}

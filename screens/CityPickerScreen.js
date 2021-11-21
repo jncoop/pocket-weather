@@ -15,8 +15,8 @@ import { SearchPlaceCell } from "../components/SearchPlaceCell";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const CityPickerScreen = ({ route, navigation }) => {
-  // const navigation = useNavigation();
+export const CityPickerScreen = ({ route }) => {
+  const navigation = useNavigation();
 
   if (route) console.log("place picker screen ", route.params);
 
@@ -39,6 +39,8 @@ export const CityPickerScreen = ({ route, navigation }) => {
   };
 
   const getGeoCode = async (location) => {
+    console.log("getGeoCode ", location);
+
     setLoading(true);
 
     const geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${API_KEY}`;
@@ -47,6 +49,7 @@ export const CityPickerScreen = ({ route, navigation }) => {
       const response = await fetch(geoCodeURL);
       const json = await response.json();
       setPlacesResults(json);
+      console.log("set places json ", json);
     } catch (error) {
       console.error(error);
     } finally {

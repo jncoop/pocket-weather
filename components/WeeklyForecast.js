@@ -6,24 +6,23 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import { getPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 import { ForecastCell } from "./ForecastCell";
 
-export const WeeklyForecast = ({ route, navigation }) => {
-  const tempLat = "52.2823";
-  const tempLong = "1.5849";
-
+export const WeeklyForecast = ({ location }) => {
   const [isLoading, setLoading] = useState(true);
   const [forecastData, setData] = useState([]);
-  const [prefPlace, setPrefPlace] = useState({});
+
+  const testLocation = {
+    lon: "52.2823",
+    lat: "1.5249",
+  };
 
   const getForecast = async (url) => {
     try {
       const response = await fetch(url);
       const json = await response.json();
       setData(json);
-      console.log("response data ", json);
     } catch (error) {
       console.error(error);
     } finally {
@@ -32,11 +31,8 @@ export const WeeklyForecast = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    const location = route.params.location;
-    if (location && location.lon && location.lat) {
-      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lon}&exclude=minutely,hourly&appid=${API_KEY}`;
-      getForecast(url);
-    }
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${testLocation.lat}&lon=${testLocation.lon}&exclude=minutely,hourly&units=metric&appid=${API_KEY}`;
+    getForecast(url);
   }, []);
 
   return (
