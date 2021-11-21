@@ -5,6 +5,7 @@ import ForecastScreen from "../screens/ForecastScreen";
 import PlacePicker from "../screens/PlacePickerScreen";
 import { CityPickerScreen } from "../screens/CityPickerScreen";
 import { WeeklyForecast } from "../components/WeeklyForecast";
+import DetailsScreen from "../screens/DetailsScreen";
 
 const CitiesStack = createNativeStackNavigator();
 
@@ -33,7 +34,29 @@ export const CitiesNavStack = () => {
         <CitiesStack.Screen
           name="Forecast"
           component={WeeklyForecast}
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: "#241B3A",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <CitiesStack.Screen
+          name="Day Forecast"
+          component={DetailsScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "#241B3A",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
         />
       </CitiesStack.Group>
       <CitiesStack.Group screenOptions={{ presentation: "modal" }}>
@@ -44,6 +67,10 @@ export const CitiesNavStack = () => {
             headerShown: true,
             headerStyle: {
               backgroundColor: "#241B3A",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
             },
           }}
         />

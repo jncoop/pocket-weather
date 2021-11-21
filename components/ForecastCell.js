@@ -3,32 +3,41 @@ import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import placeHolderIcon from "../assets/weather-placeholder.png";
 import cellActiveArr from "../assets/cell-arrow-pri.png";
+import { convertUnixDateTime } from "../utils/DateConverter";
+import { capitalizeFirstLetter } from "../utils/CapitaliseString";
 export const ForecastCell = ({ item, id }) => {
   const navigation = useNavigation(); // navigation hook
-
+  const forecast = item;
+  const forecastIcon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+  const date = convertUnixDateTime(forecast.dt);
+  console.log("forecast cell item ", item);
   return (
     <TouchableOpacity
       style={styles.container}
       key={id}
-      onPress={() =>
-        navigation.navigate("Forecast Details", { forecast: item })
-      }
+      onPress={() => navigation.navigate("Day Forecast", { forecast: item })}
     >
       <View style={styles.dayContainer}>
         <Image
           style={styles.detailImage}
-          source={placeHolderIcon}
+          source={{ uri: forecastIcon }}
           resizeMode="cover"
         />
-        <Text style={styles.dayText}>Mon</Text>
+        <Text style={styles.dayText}>{`${date.day}`}</Text>
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.tempContainer}>
-          <Text style={styles.highTemp}>11°C / </Text>
-          <Text style={styles.lowTemp}>3°C</Text>
+          <Text style={styles.highTemp}>
+            {Number(forecast.temp.max).toFixed(0)} °C /{" "}
+          </Text>
+          <Text style={styles.lowTemp}>
+            {Number(forecast.temp.min).toFixed(0)} °C
+          </Text>
         </View>
         <View style={styles.descContainer}>
-          <Text style={styles.descText}>Light cloud and partial sun</Text>
+          <Text style={styles.descText}>
+            {capitalizeFirstLetter(forecast.weather[0].description)}
+          </Text>
         </View>
       </View>
       <Image style={styles.cellArr} source={cellActiveArr} />

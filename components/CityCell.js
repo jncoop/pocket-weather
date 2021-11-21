@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "lightgrey",
     alignItems: "center",
+    padding: 8,
   },
   placeContainer: {
     flex: 1,
@@ -88,6 +89,8 @@ const styles = StyleSheet.create({
   placeText: {
     paddingTop: 24,
     paddingBottom: 24,
+    paddingLeft: 8,
+    paddingRight: 8,
     fontSize: 18,
     fontWeight: "700",
     color: "black",

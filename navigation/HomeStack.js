@@ -29,11 +29,15 @@ export const HomeNavStack = () => {
           }}
         />
         <HomeStack.Screen
-          name="Forecast Details"
+          name="Day Forecast"
           component={DetailsScreen}
           options={{
             headerStyle: {
               backgroundColor: "#241B3A",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
             },
           }}
         />
