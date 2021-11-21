@@ -9,8 +9,6 @@ export const setPrefPlace = (cities) => {
 export const getPrefPlace = async () => {
   const prefLocation = await getData(prefLocationKey)
     .then((response) => {
-      console.log("prefLocation ", response);
-
       if (response) return JSON.parse(response);
       return;
     })

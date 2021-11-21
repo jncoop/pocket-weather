@@ -11,25 +11,43 @@ export const HomeNavStack = () => {
     <HomeStack.Navigator
       options={{
         initialRouteName: "Home",
+        headerShown: false,
       }}
     >
       <HomeStack.Group>
         <HomeStack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: true }}
+          options={{
+            headerStyle: {
+              backgroundColor: "#241B3A",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
         />
         <HomeStack.Screen
           name="Forecast Details"
           component={DetailsScreen}
-          options={{ headerShown: true }}
+          options={{
+            headerStyle: {
+              backgroundColor: "#241B3A",
+            },
+          }}
         />
       </HomeStack.Group>
       <HomeStack.Group screenOptions={{ presentation: "modal" }}>
         <HomeStack.Screen
           name="Place Picker"
           component={PlacePicker}
-          options={{ headerShown: false, gestureEnabled: false }}
+          options={{
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: "#241B3A",
+            },
+          }}
         />
       </HomeStack.Group>
     </HomeStack.Navigator>

@@ -9,7 +9,8 @@ import {
 import { getPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 import { ForecastCell } from "./ForecastCell";
-export const WeeklyForecast = () => {
+
+export const WeeklyForecast = ({ route, navigation }) => {
   const tempLat = "52.2823";
   const tempLong = "1.5849";
 
@@ -30,23 +31,12 @@ export const WeeklyForecast = () => {
     }
   };
 
-  const returnPrefPlace = async () => {
-    let response = await getPrefPlace();
-    console.log("getPrefPlace ", response);
-    if (response) {
-      console.log("res 2 ", response);
-      setPrefPlace(response);
-      console.log("set pref response ", response);
-      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.lat}&lon=${response.lon}&exclude=minutely,hourly&appid=${API_KEY}`;
+  useEffect(() => {
+    const location = route.params.location;
+    if (location && location.lon && location.lat) {
+      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lon}&exclude=minutely,hourly&appid=${API_KEY}`;
       getForecast(url);
     }
-  };
-
-  useEffect(() => {
-    console.log("useEffect call ", prefPlace);
-
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${tempLat}&lon=${tempLong}&exclude=minutely,hourly&appid=${API_KEY}`;
-    getForecast(url);
   }, []);
 
   return (

@@ -12,10 +12,10 @@ import {
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
-import { setPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const PlacePickerScreen = ({ route, navigation }) => {
+export const CityPickerScreen = ({ route, navigation }) => {
   // const navigation = useNavigation();
 
   if (route) console.log("place picker screen ", route.params);
@@ -24,11 +24,18 @@ export const PlacePickerScreen = ({ route, navigation }) => {
   const [isLoading, setLoading] = useState(false);
   const [placesData, setPlacesResults] = useState([]);
 
-  const savePreferredPlace = (place) => {
-    setPrefPlace(place);
-    console.log("save pref place ", place, route.params.placeHandler);
-    route.params.placeHandler(place);
-    navigation.goBack();
+  const saveCities = (place) => {
+    AsyncStorage.getItem("@savedCities", (err, result) => {
+      if (err) return;
+      if (result) {
+        const updateCities = JSON.parse(result).concat(place);
+        AsyncStorage.setItem("@savedCities", JSON.stringify(updateCities));
+      } else {
+        AsyncStorage.setItem("@savedCities", JSON.stringify([place]));
+      }
+    }).finally(() => {
+      navigation.goBack();
+    });
   };
 
   const getGeoCode = async (location) => {
@@ -62,7 +69,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
                 <SearchPlaceCell
                   place={item.name + ", " + item.country}
                   item={item}
-                  callBack={savePreferredPlace}
+                  callBack={saveCities}
                 />
               )}
               style={styles.resultsList}
@@ -172,4 +179,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlacePickerScreen;
+export default CityPickerScreen;
