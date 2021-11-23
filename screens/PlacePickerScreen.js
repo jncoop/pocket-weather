@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   Text,
@@ -13,9 +12,9 @@ import {
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
-import { API_KEY } from "../utils/OpenWeatherAPIKey";
 import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
 import { fetchGeoCode } from "../coordinators/WeatherApiCoord";
+import { showAlert } from "../utils/Alert";
 
 export const PlacePickerScreen = ({ route, navigation }) => {
   const [searchTerm, onChangeText] = useState("");
@@ -57,6 +56,8 @@ export const PlacePickerScreen = ({ route, navigation }) => {
     fetchGeoCode(location)
       .then((jsonResponse) => {
         setPlacesResults(jsonResponse);
+        if (jsonResponse.length === 0)
+          showAlert("City Search", "No results found, please try again");
       })
       .catch((err) => {
         console.error(err);

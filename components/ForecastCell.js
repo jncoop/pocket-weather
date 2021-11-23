@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import placeHolderIcon from "../assets/weather-placeholder.png";
 import cellActiveArr from "../assets/cell-arrow-pri.png";
 import { convertUnixDateTime } from "../utils/DateConverter";
 import { capitalizeFirstLetter } from "../utils/CapitaliseString";

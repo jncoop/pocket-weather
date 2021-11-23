@@ -14,6 +14,7 @@ import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
 import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
 import { fetchGeoCode } from "../coordinators/WeatherApiCoord";
+import { showAlert } from "../utils/Alert";
 
 export const CityPickerScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -52,6 +53,8 @@ export const CityPickerScreen = ({ route }) => {
     fetchGeoCode(location)
       .then((jsonResponse) => {
         setcitiesResults(jsonResponse);
+        if (jsonResponse.length === 0)
+          showAlert("City Search", "No results found, please try again");
       })
       .catch((err) => {
         console.error(err);

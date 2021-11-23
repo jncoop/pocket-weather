@@ -1,13 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  TextInput,
-  Button,
-} from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { capitalizeFirstLetter } from "../utils/CapitaliseString";
 import { convertUnixDateTime } from "../utils/DateConverter";

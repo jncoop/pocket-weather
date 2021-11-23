@@ -7,7 +7,6 @@ import {
   FlatList,
 } from "react-native";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import addIcon from "../assets/add-icon.png";
 import { CityCell } from "../components/CityCell";
 import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";

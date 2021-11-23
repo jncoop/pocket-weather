@@ -13,6 +13,8 @@ export const WeeklyForecast = ({ route }) => {
     fetchForecast(location)
       .then((jsonResponse) => {
         setData(jsonResponse);
+        if (jsonResponse.length === 0)
+          showAlert("Week Forecast", "Error retrieving weather forecast");
       })
       .catch((err) => {
         console.error(err);
