@@ -41,8 +41,6 @@ export const PlacePickerScreen = ({ route, navigation }) => {
           const locationJSON = JSON.parse(location);
           console.log("locationJSON ", locationJSON);
           setPrefPlace(locationJSON);
-        } else {
-          navigation.navigate("Place Picker");
         }
       })
       .catch((error) => {
@@ -61,7 +59,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
       const response = await fetch(geoCodeURL);
       const json = await response.json();
       setPlacesResults(json);
-      console.log("calling api");
+      console.log("calling api ", json);
     } catch (error) {
       console.error(error);
     } finally {
@@ -73,7 +71,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
     if (Object.keys(prefPlace).length !== 0 && searchTerm.length === 0) {
       return (
         <View style={styles.prefPlaceholder}>
-          <Text style={styles.title}>Preferred Place</Text>
+          <Text style={styles.subTitle}>Preferred Place</Text>
           <SearchPlaceCell
             place={prefPlace.name + ", " + prefPlace.country}
             item={prefPlace}
@@ -221,7 +219,6 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 24,
   },
-
   resultsList: {
     flexShrink: 1,
   },
