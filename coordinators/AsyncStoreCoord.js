@@ -13,7 +13,7 @@ export const getStoreItem = async (key) => {
 
 export const setStoreItem = async (key, updatedItem) => {
   return AsyncStorage.setItem(key, JSON.stringify(updatedItem))
-    .then(() => {
+    .then((response) => {
       return true;
     })
     .catch((err) => {

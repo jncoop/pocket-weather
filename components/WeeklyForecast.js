@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View, StyleSheet, FlatList } from "react-native";
-import { fetchForecast } from "../coordinators/weather-api-coord";
+import { fetchForecast } from "../coordinators/WeatherApiCoord";
 import { ForecastCell } from "./ForecastCell";
 
 export const WeeklyForecast = ({ route }) => {

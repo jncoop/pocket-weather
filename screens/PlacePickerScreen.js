@@ -14,8 +14,8 @@ import {
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
-import { getStoreItem, setStoreItem } from "../coordinators/async-store-coord";
-import { fetchGeoCode } from "../coordinators/weather-api-coord";
+import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
+import { fetchGeoCode } from "../coordinators/WeatherApiCoord";
 
 export const PlacePickerScreen = ({ route, navigation }) => {
   const [searchTerm, onChangeText] = useState("");

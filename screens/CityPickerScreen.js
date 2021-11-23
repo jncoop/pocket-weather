@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
-import { getStoreItem, setStoreItem } from "../coordinators/async-store-coord";
-import { fetchGeoCode } from "../coordinators/weather-api-coord";
+import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
+import { fetchGeoCode } from "../coordinators/WeatherApiCoord";
 
 export const CityPickerScreen = ({ route }) => {
   const navigation = useNavigation();
