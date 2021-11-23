@@ -17,8 +17,6 @@ const HomeScreen = ({ navigation }) => {
           // console.log("payLoad ", payLoad);
           setPrefLocation(payLoad);
           // console.log("prefLocation state ", prefLocation);
-        } else {
-          navigation.navigate("Place Picker");
         }
       })
       .catch((error) => {

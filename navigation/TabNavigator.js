@@ -3,8 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { HomeNavStack } from "./HomeStack";
 import { CitiesNavStack } from "./CitiesStack";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const TabNavigator = () => {
   const BottomNavigator = createBottomTabNavigator();
@@ -14,6 +15,7 @@ export const TabNavigator = () => {
       <BottomNavigator.Navigator
         screenOptions={{
           tabBarStyle: styles.tabBar,
+          tabBarHideOnKeyboard: "true",
         }}
       >
         <BottomNavigator.Screen

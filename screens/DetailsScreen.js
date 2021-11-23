@@ -26,7 +26,7 @@ export const DetailsScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.locationContainer}>
         <Text style={styles.locationTitle}>
           {location.name + ", " + location.country}
@@ -39,53 +39,47 @@ export const DetailsScreen = ({ route, navigation }) => {
         <Text style={styles.day}>{`${date.day}`}</Text>
         <Text style={styles.date}>{`${date.date} ${date.m} ${date.y}`}</Text>
       </View>
-      <ScrollView style={styles.scroll} contentContainerStyle={{ flex: 1 }}>
-        <View style={styles.conditionContainer}>
-          <View style={styles.headerContainer}>
-            <Image
-              style={styles.conditionImg}
-              source={{ uri: conditionIcon }}
-            />
-            <View style={styles.highLowContainer}>
-              <Text style={styles.highTemp}>
-                {Number(forecast.temp.max).toFixed(0)} °C
-              </Text>
-              <Text style={styles.lowTemp}>
-                {Number(forecast.temp.min).toFixed(0)} °C
-              </Text>
+      <View style={styles.conditionContainer}>
+        <View style={styles.headerContainer}>
+          <Image style={styles.conditionImg} source={{ uri: conditionIcon }} />
+          <View style={styles.highLowContainer}>
+            <Text style={styles.highTemp}>
+              {Number(forecast.temp.max).toFixed(0)} °C
+            </Text>
+            <Text style={styles.lowTemp}>
+              {Number(forecast.temp.min).toFixed(0)} °C
+            </Text>
+          </View>
+        </View>
+        <Text style={styles.conditionText}>
+          {capitalizeFirstLetter(forecast.weather[0].description)}
+        </Text>
+        <View style={styles.environmentContainer}>
+          <View style={styles.column}>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.humidity} %</Text>
+              <Text style={styles.infoTitle}>Humidity</Text>
+            </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.pressure} Pa</Text>
+              <Text style={styles.infoTitle}>Pressure</Text>
             </View>
           </View>
-          <Text style={styles.conditionText}>
-            {capitalizeFirstLetter(forecast.weather[0].description)}
-          </Text>
-          <View style={styles.environmentContainer}>
-            <View style={styles.column}>
-              <View style={styles.gridCell}>
-                <Text style={styles.infoText}>{forecast.humidity} %</Text>
-                <Text style={styles.infoTitle}>Humidity</Text>
-              </View>
-              <View style={styles.gridCell}>
-                <Text style={styles.infoText}>{forecast.pressure} Pa</Text>
-                <Text style={styles.infoTitle}>Pressure</Text>
-              </View>
-            </View>
-            <View style={styles.column}>
-              <View style={styles.gridCell}>
-                <Text style={styles.infoText}>{forecast.uvi}</Text>
-                <Text style={styles.infoTitle}>UVI</Text>
-              </View>
+          <View style={styles.column}>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.uvi}</Text>
+              <Text style={styles.infoTitle}>UVI</Text>
             </View>
           </View>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#241B3A",
-    flex: 1,
   },
   locationContainer: {
     padding: 16,

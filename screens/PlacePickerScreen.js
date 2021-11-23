@@ -10,17 +10,15 @@ import {
   TouchableOpacity,
   FlatList,
   StatusBar,
+  Keyboard,
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
-import { setPrefPlace } from "../datastore/prefPlaceModel";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const PlacePickerScreen = ({ route }) => {
-  const navigation = useNavigation();
-
+export const PlacePickerScreen = ({ route, navigation }) => {
   const [searchTerm, onChangeText] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [placesData, setPlacesResults] = useState([]);
@@ -53,6 +51,8 @@ export const PlacePickerScreen = ({ route }) => {
   };
 
   const getGeoCode = async (location) => {
+    Keyboard.dismiss();
+
     setLoading(true);
 
     const geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${API_KEY}`;
@@ -122,11 +122,7 @@ export const PlacePickerScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#dddddd"
-        hidden="false"
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#241B3A" />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Pocket Weather</Text>

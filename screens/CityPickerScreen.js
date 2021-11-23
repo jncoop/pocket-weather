@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   FlatList,
+  Keyboard,
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
@@ -39,7 +40,7 @@ export const CityPickerScreen = ({ route }) => {
   };
 
   const getGeoCode = async (location) => {
-    console.log("getGeoCode ", location);
+    Keyboard.dismiss();
 
     setLoading(true);
 
