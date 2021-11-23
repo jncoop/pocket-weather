@@ -16,7 +16,7 @@ const CitiesScreen = ({ navigation }) => {
   const [cities, setCities] = useState([]);
 
   const openAddCityPage = () => {
-    navigation.navigate("City Picker");
+    navigation.navigate("Add city");
   };
 
   useLayoutEffect(() => {
@@ -48,7 +48,6 @@ const CitiesScreen = ({ navigation }) => {
   };
 
   const deleteCity = (city) => {
-    console.log("delete city ", city, cities);
     setCities((prevState) =>
       prevState.filter((place) => place.name !== city.name)
     );

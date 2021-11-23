@@ -18,11 +18,9 @@ import { fetchGeoCode } from "../coordinators/WeatherApiCoord";
 export const CityPickerScreen = ({ route }) => {
   const navigation = useNavigation();
 
-  if (route) console.log("place picker screen ", route.params);
-
   const [searchTerm, onChangeText] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [placesData, setPlacesResults] = useState([]);
+  const [citiesData, setcitiesResults] = useState([]);
 
   const saveCities = (place) => {
     getStoreItem("@savedCities")
@@ -53,7 +51,7 @@ export const CityPickerScreen = ({ route }) => {
 
     fetchGeoCode(location)
       .then((jsonResponse) => {
-        setPlacesResults(jsonResponse);
+        setcitiesResults(jsonResponse);
       })
       .catch((err) => {
         console.error(err);
@@ -63,8 +61,8 @@ export const CityPickerScreen = ({ route }) => {
       });
   };
 
-  const placesResults = () => {
-    if (placesData.length > 0 && searchTerm.length) {
+  const citiesResults = () => {
+    if (citiesData.length > 0 && searchTerm.length) {
       return (
         <View style={styles.placesContainer}>
           <Text style={styles.title}>Select location</Text>
@@ -72,7 +70,7 @@ export const CityPickerScreen = ({ route }) => {
             <ActivityIndicator />
           ) : (
             <FlatList
-              data={placesData}
+              data={citiesData}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <SearchPlaceCell
@@ -92,24 +90,18 @@ export const CityPickerScreen = ({ route }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Pocket Weather</Text>
-          <Text style={styles.headerSubTitle}>
-            The weather station in your pocker
-          </Text>
-        </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.title}>Find a forecast</Text>
+          <Text style={styles.title}>Select a city</Text>
 
           <View style={styles.searchBar}>
             <TextInput
               style={styles.searchInput}
               onChangeText={(text) => {
                 onChangeText(text);
-                if (text.length === 0) setPlacesResults([]);
+                if (text.length === 0) setcitiesResults([]);
               }}
               value={searchTerm}
-              placeholder={"Type your preferred location"}
+              placeholder={"Search your favourite cities"}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -119,7 +111,7 @@ export const CityPickerScreen = ({ route }) => {
             />
           </View>
         </View>
-        <View style={styles.resultsContainer}>{placesResults()}</View>
+        <View style={styles.resultsContainer}>{citiesResults()}</View>
       </View>
     </SafeAreaView>
   );

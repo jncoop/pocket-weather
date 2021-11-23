@@ -59,7 +59,7 @@ export const CitiesNavStack = () => {
       </CitiesStack.Group>
       <CitiesStack.Group screenOptions={{ presentation: "modal" }}>
         <CitiesStack.Screen
-          name="City Picker"
+          name="Add city"
           component={CityPickerScreen}
           options={{
             headerShown: true,

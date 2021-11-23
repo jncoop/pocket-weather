@@ -19,7 +19,6 @@ export const DetailsScreen = ({ route, navigation }) => {
   const date = convertUnixDateTime(forecast.dt);
 
   const conditionIcon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
-  console.log("conditionIcon ", conditionIcon);
 
   const navigateHome = () => {
     navigation.dispatch(StackActions.popToTop());
