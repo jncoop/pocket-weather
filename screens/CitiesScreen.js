@@ -14,6 +14,7 @@ import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
 const CitiesScreen = ({ navigation }) => {
   const [cities, setCities] = useState([]);
 
+  //navigate to add city screen
   const openAddCityPage = () => {
     navigation.navigate("Add city");
   };
@@ -28,6 +29,7 @@ const CitiesScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  //returns cities from async store
   const getCities = () => {
     getStoreItem("@savedCities")
       .then((storedCities) => {
@@ -40,12 +42,14 @@ const CitiesScreen = ({ navigation }) => {
       });
   };
 
+  //updates cities store with cities state
   const updateCities = async () => {
     setStoreItem("@savedCities", cities).then((response) => {
       if (!response) console.error("Error updating cities ", response);
     });
   };
 
+  //removed city from cities
   const deleteCity = (delCity) => {
     setCities((prevState) =>
       prevState.filter((city) => city.name !== delCity.name)
@@ -55,6 +59,7 @@ const CitiesScreen = ({ navigation }) => {
 
   useEffect(() => {
     getCities();
+    //load cities on re-focus
     const willFocusSubscription = navigation.addListener("focus", () => {
       getCities();
     });

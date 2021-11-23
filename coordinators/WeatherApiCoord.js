@@ -1,5 +1,11 @@
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
 
+/**
+ * fetches geo-location of passed string location name. Name can include CSV
+ * @param {string} locationName - location string for geo-response.
+ * @return {object} geo-location response object
+ */
+
 export const fetchGeoCode = async (locationName) => {
   const geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${locationName}&appid=${API_KEY}`;
 
@@ -11,6 +17,12 @@ export const fetchGeoCode = async (locationName) => {
     throw "Error getting geo code";
   }
 };
+
+/**
+ * fetches forecast for passed location object
+ * @param {object} location - pass geolocation response.
+ * @return {object} forecast response object
+ */
 
 export const fetchForecast = async (location) => {
   if (!location.lat || !location.lon) {

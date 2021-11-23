@@ -22,10 +22,12 @@ export const PlacePickerScreen = ({ route, navigation }) => {
   const [placesData, setPlacesResults] = useState([]);
   const [prefPlace, setPrefPlace] = useState({});
 
+  //navigate to weeks forecast screen
   const navigateToForecast = (location) => {
     navigation.navigate("Forecast", { location: location });
   };
 
+  //updates store with users preferred location
   const updatePrefLocation = async (location) => {
     setPrefPlace(location);
 
@@ -36,6 +38,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
     });
   };
 
+  //returns users preferred location from store
   const getPrefLocation = () => {
     getStoreItem("@prefLocation")
       .then((location) => {
@@ -48,6 +51,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
       });
   };
 
+  //returns geo-location for searched location
   const getGeoCode = (location) => {
     Keyboard.dismiss();
 
@@ -67,6 +71,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
       });
   };
 
+  //returns preferred place component
   const preferredPlace = () => {
     if (Object.keys(prefPlace).length !== 0 && searchTerm.length === 0) {
       return (
@@ -82,6 +87,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
     }
   };
 
+  //returns places search result component list
   const placesResults = () => {
     if (placesData.length > 0 && searchTerm.length) {
       return (
@@ -109,8 +115,10 @@ export const PlacePickerScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    //get location if no preferred place set
     if (Object.keys(prefPlace).length === 0) getPrefLocation();
 
+    //on focus, get preferred location
     const willFocusSubscription = navigation.addListener("focus", () => {
       getPrefLocation();
     });

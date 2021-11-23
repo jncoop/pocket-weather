@@ -2,10 +2,12 @@ import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/asy
 import "react-native-gesture-handler/jestSetup";
 import fetchMock from "jest-fetch-mock";
 
-//async storage
+//mocks for jest setup
+
+//mock async storage
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 
-//react native navigation
+//react native navigation mock
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
 

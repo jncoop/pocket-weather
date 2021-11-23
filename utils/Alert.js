@@ -1,5 +1,11 @@
 import { Alert } from "react-native";
 
+/**
+ * Returns device-specific alert modal
+ * @param {string=} title - alert title
+ * @param {string=} message - alert message
+ **/
+
 export const showAlert = (title, message) =>
   Alert.alert(
     title,

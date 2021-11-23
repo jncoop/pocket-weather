@@ -23,6 +23,7 @@ export const CityPickerScreen = ({ route }) => {
   const [isLoading, setLoading] = useState(false);
   const [citiesData, setcitiesResults] = useState([]);
 
+  //saves passed city to cities store
   const saveCities = (city) => {
     getStoreItem("@savedCities")
       .then((result) => {
@@ -45,6 +46,7 @@ export const CityPickerScreen = ({ route }) => {
       });
   };
 
+  //returns geo-location object for location name
   const getGeoCode = (location) => {
     Keyboard.dismiss();
 
@@ -64,6 +66,7 @@ export const CityPickerScreen = ({ route }) => {
       });
   };
 
+  //returns results from geo-location search
   const citiesResults = () => {
     if (citiesData.length > 0 && searchTerm.length) {
       return (

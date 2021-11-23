@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {number=} unixDateTime - string to capitalise
+ * @return {object} custom date object
+ **/
+
 export const convertUnixDateTime = (unixDateTime) => {
   var date = new Date(unixDateTime * 1000);
   var months = [
