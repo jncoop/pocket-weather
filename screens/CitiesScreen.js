@@ -10,6 +10,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import addIcon from "../assets/add-icon.png";
 import { CityCell } from "../components/CityCell";
+import { getStoreItem, setStoreItem } from "../coordinators/async-store-coord";
 
 const CitiesScreen = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -29,14 +30,21 @@ const CitiesScreen = ({ navigation }) => {
   }, [navigation]);
 
   const getCities = () => {
-    AsyncStorage.getItem("@savedCities").then((storedCities) => {
-      console.log("stored cities ", storedCities);
-      setCities(JSON.parse(storedCities));
-    });
+    getStoreItem("@savedCities")
+      .then((storedCities) => {
+        if (storedCities && storedCities.length > 0) {
+          setCities(storedCities);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting pref location ", error);
+      });
   };
 
   const updateCities = async () => {
-    AsyncStorage.setItem("@savedCities", JSON.stringify(cities));
+    setStoreItem("@savedCities", cities).then((response) => {
+      if (!response) console.error("Error updating cities ", response);
+    });
   };
 
   const deleteCity = (city) => {

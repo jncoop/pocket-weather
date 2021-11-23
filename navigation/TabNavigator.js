@@ -24,7 +24,7 @@ export const TabNavigator = () => {
           options={{
             title: "Home",
             headerShown: false,
-            tabBarIcon: ({ focused, size, color }) => {
+            tabBarIcon: ({ size, color }) => {
               return <Ionicons name={"home"} size={size} color={color} />;
             },
             tabBarActiveTintColor: "#FF4438",
@@ -37,7 +37,7 @@ export const TabNavigator = () => {
           options={{
             tabBarLabel: "Cities",
             headerShown: false,
-            tabBarIcon: ({ focused, size, color }) => {
+            tabBarIcon: ({ size, color }) => {
               return <Ionicons name={"star"} size={size} color={color} />;
             },
             tabBarActiveTintColor: "#FF4438",

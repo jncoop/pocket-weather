@@ -7,14 +7,13 @@ import {
   SafeAreaView,
   TextInput,
   ActivityIndicator,
-  TouchableOpacity,
   FlatList,
   Keyboard,
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
-import { API_KEY } from "../utils/OpenWeatherAPIKey";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getStoreItem, setStoreItem } from "../coordinators/async-store-coord";
+import { fetchGeoCode } from "../coordinators/weather-api-coord";
 
 export const CityPickerScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -26,36 +25,42 @@ export const CityPickerScreen = ({ route }) => {
   const [placesData, setPlacesResults] = useState([]);
 
   const saveCities = (place) => {
-    AsyncStorage.getItem("@savedCities", (err, result) => {
-      if (err) return;
-      if (result) {
-        const updateCities = JSON.parse(result).concat(place);
-        AsyncStorage.setItem("@savedCities", JSON.stringify(updateCities));
-      } else {
-        AsyncStorage.setItem("@savedCities", JSON.stringify([place]));
-      }
-    }).finally(() => {
-      navigation.goBack();
-    });
+    getStoreItem("@savedCities")
+      .then((result) => {
+        if (result && result.length > 0) {
+          return result.concat(place);
+        } else {
+          return [place];
+        }
+      })
+      .then((citiesArr) => {
+        setStoreItem("@savedCities", citiesArr).then((res) => {
+          if (!res) throw "Error setting cities";
+        });
+      })
+      .catch((error) => {
+        console.error("Error saving cities: ", error);
+      })
+      .finally(() => {
+        navigation.goBack();
+      });
   };
 
-  const getGeoCode = async (location) => {
+  const getGeoCode = (location) => {
     Keyboard.dismiss();
 
     setLoading(true);
 
-    const geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${API_KEY}`;
-
-    try {
-      const response = await fetch(geoCodeURL);
-      const json = await response.json();
-      setPlacesResults(json);
-      console.log("set places json ", json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    fetchGeoCode(location)
+      .then((jsonResponse) => {
+        setPlacesResults(jsonResponse);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const placesResults = () => {

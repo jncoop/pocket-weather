@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   TextInput,
   ActivityIndicator,
-  TouchableOpacity,
   FlatList,
   StatusBar,
   Keyboard,
@@ -15,8 +14,8 @@ import {
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
 import { API_KEY } from "../utils/OpenWeatherAPIKey";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getStoreItem, setStoreItem } from "../coordinators/async-store-coord";
+import { fetchGeoCode } from "../coordinators/weather-api-coord";
 
 export const PlacePickerScreen = ({ route, navigation }) => {
   const [searchTerm, onChangeText] = useState("");
@@ -30,17 +29,19 @@ export const PlacePickerScreen = ({ route, navigation }) => {
 
   const updatePrefLocation = async (location) => {
     setPrefPlace(location);
-    await AsyncStorage.setItem("@prefLocation", JSON.stringify(location));
-    navigateToForecast(location);
+
+    setStoreItem("@prefLocation", location).then((response) => {
+      if (!response)
+        console.error("Error updating preffered location ", response);
+      navigateToForecast(location);
+    });
   };
 
   const getPrefLocation = () => {
-    AsyncStorage.getItem("@prefLocation")
+    getStoreItem("@prefLocation")
       .then((location) => {
         if (location && location.length > 0) {
-          const locationJSON = JSON.parse(location);
-          console.log("locationJSON ", locationJSON);
-          setPrefPlace(locationJSON);
+          setPrefPlace(location);
         }
       })
       .catch((error) => {
@@ -48,23 +49,21 @@ export const PlacePickerScreen = ({ route, navigation }) => {
       });
   };
 
-  const getGeoCode = async (location) => {
+  const getGeoCode = (location) => {
     Keyboard.dismiss();
 
     setLoading(true);
 
-    const geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${API_KEY}`;
-
-    try {
-      const response = await fetch(geoCodeURL);
-      const json = await response.json();
-      setPlacesResults(json);
-      console.log("calling api ", json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    fetchGeoCode(location)
+      .then((jsonResponse) => {
+        setPlacesResults(jsonResponse);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const preferredPlace = () => {
