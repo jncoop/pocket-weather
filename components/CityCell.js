@@ -11,8 +11,9 @@ import {
 import cellActiveArr from "../assets/cell-arrow-pri.png";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
-export const CityCell = ({ item, place, deleteCallback }) => {
-  const navigation = useNavigation(); // navigation hook
+//returns cell showing city item with name and detail arrow
+export const CityCell = ({ city, deleteCallback }) => {
+  const navigation = useNavigation();
 
   const swipeRight = (progress, dragX) => {
     const scale = dragX.interpolate({
@@ -49,7 +50,7 @@ export const CityCell = ({ item, place, deleteCallback }) => {
       toValue: 0,
       duration: 350,
       useNativeDriver: false,
-    }).start(() => deleteCallback(item));
+    }).start(() => deleteCallback(city));
   };
 
   return (
@@ -61,10 +62,10 @@ export const CityCell = ({ item, place, deleteCallback }) => {
       <Animated.View>
         <TouchableOpacity
           style={styles.container}
-          onPress={() => navigation.navigate("Forecast", { location: item })}
+          onPress={() => navigation.navigate("Forecast", { location: city })}
         >
           <View style={styles.placeContainer}>
-            <Text style={styles.placeText}>{place}</Text>
+            <Text style={styles.placeText}>{city.name}</Text>
           </View>
           <Image style={styles.cellArr} source={cellActiveArr} />
         </TouchableOpacity>

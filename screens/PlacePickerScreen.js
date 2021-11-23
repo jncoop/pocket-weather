@@ -57,7 +57,7 @@ export const PlacePickerScreen = ({ route, navigation }) => {
       .then((jsonResponse) => {
         setPlacesResults(jsonResponse);
         if (jsonResponse.length === 0)
-          showAlert("City Search", "No results found, please try again");
+          showAlert("Forecast Search", "No locations found, please try again");
       })
       .catch((err) => {
         console.error(err);

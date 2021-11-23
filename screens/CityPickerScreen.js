@@ -23,13 +23,13 @@ export const CityPickerScreen = ({ route }) => {
   const [isLoading, setLoading] = useState(false);
   const [citiesData, setcitiesResults] = useState([]);
 
-  const saveCities = (place) => {
+  const saveCities = (city) => {
     getStoreItem("@savedCities")
       .then((result) => {
         if (result && result.length > 0) {
-          return result.concat(place);
+          return result.concat(city);
         } else {
-          return [place];
+          return [city];
         }
       })
       .then((citiesArr) => {
@@ -67,7 +67,7 @@ export const CityPickerScreen = ({ route }) => {
   const citiesResults = () => {
     if (citiesData.length > 0 && searchTerm.length) {
       return (
-        <View style={styles.placesContainer}>
+        <View style={styles.cityContainer}>
           <Text style={styles.title}>Select location</Text>
           {isLoading ? (
             <ActivityIndicator />
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flexGrow: 1,
   },
-  placesContainer: {
+  cityContainer: {
     flex: 4,
   },
 });

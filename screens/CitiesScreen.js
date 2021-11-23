@@ -46,9 +46,9 @@ const CitiesScreen = ({ navigation }) => {
     });
   };
 
-  const deleteCity = (city) => {
+  const deleteCity = (delCity) => {
     setCities((prevState) =>
-      prevState.filter((place) => place.name !== city.name)
+      prevState.filter((city) => city.name !== delCity.name)
     );
     updateCities();
   };
@@ -68,7 +68,7 @@ const CitiesScreen = ({ navigation }) => {
         data={cities}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <CityCell item={item} place={item.name} deleteCallback={deleteCity} />
+          <CityCell city={item} deleteCallback={deleteCity} />
         )}
         style={styles.resultsList}
       />

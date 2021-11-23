@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
+//returns full width button with text and background orange
 const FullButton = ({ text, callBack }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={callBack}>
