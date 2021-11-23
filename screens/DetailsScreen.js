@@ -6,64 +6,73 @@ import {
   SafeAreaView,
   Image,
   TextInput,
+  Button,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { capitalizeFirstLetter } from "../utils/CapitaliseString";
 import { convertUnixDateTime } from "../utils/DateConverter";
+import { StackActions } from "@react-navigation/native";
 
 export const DetailsScreen = ({ route, navigation }) => {
   const forecast = route.params.forecast;
+  const location = route.params.location;
   const date = convertUnixDateTime(forecast.dt);
 
   const conditionIcon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
   console.log("conditionIcon ", conditionIcon);
-  useEffect(() => {
-    console.log("state forecast ", forecast);
-    console.log("converted date ", date);
-  }, []);
+
+  const navigateHome = () => {
+    navigation.dispatch(StackActions.popToTop());
+  };
 
   return (
     <View style={styles.container}>
+      <View style={styles.locationContainer}>
+        <Text style={styles.locationTitle}>
+          {location.name + ", " + location.country}
+        </Text>
+        <TouchableOpacity onPress={navigateHome}>
+          <Text style={styles.changeLocBtn}>Change location</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.dateContainer}>
         <Text style={styles.day}>{`${date.day}`}</Text>
         <Text style={styles.date}>{`${date.date} ${date.m} ${date.y}`}</Text>
       </View>
       <ScrollView style={styles.scroll} contentContainerStyle={{ flex: 1 }}>
-        <View style={styles.container}>
-          <View style={styles.conditionContainer}>
-            <View style={styles.headerContainer}>
-              <Image
-                style={styles.conditionImg}
-                source={{ uri: conditionIcon }}
-              />
-              <View style={styles.highLowContainer}>
-                <Text style={styles.highTemp}>
-                  {Number(forecast.temp.max).toFixed(0)} °C
-                </Text>
-                <Text style={styles.lowTemp}>
-                  {Number(forecast.temp.min).toFixed(0)} °C
-                </Text>
+        <View style={styles.conditionContainer}>
+          <View style={styles.headerContainer}>
+            <Image
+              style={styles.conditionImg}
+              source={{ uri: conditionIcon }}
+            />
+            <View style={styles.highLowContainer}>
+              <Text style={styles.highTemp}>
+                {Number(forecast.temp.max).toFixed(0)} °C
+              </Text>
+              <Text style={styles.lowTemp}>
+                {Number(forecast.temp.min).toFixed(0)} °C
+              </Text>
+            </View>
+          </View>
+          <Text style={styles.conditionText}>
+            {capitalizeFirstLetter(forecast.weather[0].description)}
+          </Text>
+          <View style={styles.environmentContainer}>
+            <View style={styles.column}>
+              <View style={styles.gridCell}>
+                <Text style={styles.infoText}>{forecast.humidity} %</Text>
+                <Text style={styles.infoTitle}>Humidity</Text>
+              </View>
+              <View style={styles.gridCell}>
+                <Text style={styles.infoText}>{forecast.pressure} Pa</Text>
+                <Text style={styles.infoTitle}>Pressure</Text>
               </View>
             </View>
-            <Text style={styles.conditionText}>
-              {capitalizeFirstLetter(forecast.weather[0].description)}
-            </Text>
-            <View style={styles.environmentContainer}>
-              <View style={styles.column}>
-                <View style={styles.gridCell}>
-                  <Text style={styles.infoText}>{forecast.humidity} %</Text>
-                  <Text style={styles.infoTitle}>Humidity</Text>
-                </View>
-                <View style={styles.gridCell}>
-                  <Text style={styles.infoText}>{forecast.pressure} Pa</Text>
-                  <Text style={styles.infoTitle}>Pressure</Text>
-                </View>
-              </View>
-              <View style={styles.column}>
-                <View style={styles.gridCell}>
-                  <Text style={styles.infoText}>{forecast.uvi}</Text>
-                  <Text style={styles.infoTitle}>UVI</Text>
-                </View>
+            <View style={styles.column}>
+              <View style={styles.gridCell}>
+                <Text style={styles.infoText}>{forecast.uvi}</Text>
+                <Text style={styles.infoTitle}>UVI</Text>
               </View>
             </View>
           </View>
@@ -77,6 +86,22 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#241B3A",
     flex: 1,
+  },
+  locationContainer: {
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  locationTitle: {
+    flex: 2,
+    fontWeight: "700",
+    fontSize: 26,
+    color: "white",
+  },
+  changeLocBtn: {
+    fontWeight: "700",
+    fontSize: 14,
+    color: "#FF4438",
   },
   dateContainer: {
     paddingLeft: 16,
@@ -146,7 +171,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   gridCell: {
-    margin: 8,
+    width: "90%",
+    margin: "5%",
     borderRadius: 16,
     aspectRatio: 1,
     justifyContent: "center",

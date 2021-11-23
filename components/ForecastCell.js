@@ -5,17 +5,23 @@ import placeHolderIcon from "../assets/weather-placeholder.png";
 import cellActiveArr from "../assets/cell-arrow-pri.png";
 import { convertUnixDateTime } from "../utils/DateConverter";
 import { capitalizeFirstLetter } from "../utils/CapitaliseString";
-export const ForecastCell = ({ item, id }) => {
+
+export const ForecastCell = ({ item, location, id }) => {
   const navigation = useNavigation(); // navigation hook
   const forecast = item;
   const forecastIcon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
   const date = convertUnixDateTime(forecast.dt);
-  console.log("forecast cell item ", item);
+
   return (
     <TouchableOpacity
       style={styles.container}
       key={id}
-      onPress={() => navigation.navigate("Day Forecast", { forecast: item })}
+      onPress={() =>
+        navigation.navigate("Day Forecast", {
+          forecast: item,
+          location: location,
+        })
+      }
     >
       <View style={styles.dayContainer}>
         <Image

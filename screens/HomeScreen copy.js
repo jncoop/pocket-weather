@@ -6,8 +6,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import addIcon from "../assets/add-icon.png";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreenTEST = ({ navigation }) => {
   const [prefLocation, setPrefLocation] = useState({});
+
+  const openAddCityPage = () => {
+    navigation.navigate("Place Picker");
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => openAddCityPage()}>
+          <Image onPress={() => openAddCityPage()} source={addIcon} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const getPrefLocation = () => {
     AsyncStorage.getItem("@prefLocation")
@@ -57,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeScreenTEST;

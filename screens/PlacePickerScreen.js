@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   FlatList,
+  StatusBar,
 } from "react-native";
 import FullButton from "../components/Button";
 import { SearchPlaceCell } from "../components/SearchPlaceCell";
@@ -23,12 +24,32 @@ export const PlacePickerScreen = ({ route }) => {
   const [searchTerm, onChangeText] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [placesData, setPlacesResults] = useState([]);
+  const [prefPlace, setPrefPlace] = useState({});
 
-  const updatePrefLocation = (location) => {
-    AsyncStorage.setItem("@prefLocation", JSON.stringify(location), (err) => {
-      if (err) return;
-      navigation.goBack();
-    });
+  const navigateToForecast = (location) => {
+    navigation.navigate("Forecast", { location: location });
+  };
+
+  const updatePrefLocation = async (location) => {
+    setPrefPlace(location);
+    await AsyncStorage.setItem("@prefLocation", JSON.stringify(location));
+    navigateToForecast(location);
+  };
+
+  const getPrefLocation = () => {
+    AsyncStorage.getItem("@prefLocation")
+      .then((location) => {
+        if (location && location.length > 0) {
+          const locationJSON = JSON.parse(location);
+          console.log("locationJSON ", locationJSON);
+          setPrefPlace(locationJSON);
+        } else {
+          navigation.navigate("Place Picker");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting pref location ", error);
+      });
   };
 
   const getGeoCode = async (location) => {
@@ -40,10 +61,26 @@ export const PlacePickerScreen = ({ route }) => {
       const response = await fetch(geoCodeURL);
       const json = await response.json();
       setPlacesResults(json);
+      console.log("calling api");
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const preferredPlace = () => {
+    if (Object.keys(prefPlace).length !== 0 && searchTerm.length === 0) {
+      return (
+        <View style={styles.prefPlaceholder}>
+          <Text style={styles.title}>Preferred Place</Text>
+          <SearchPlaceCell
+            place={prefPlace.name + ", " + prefPlace.country}
+            item={prefPlace}
+            callBack={navigateToForecast}
+          />
+        </View>
+      );
     }
   };
 
@@ -73,8 +110,23 @@ export const PlacePickerScreen = ({ route }) => {
     }
   };
 
+  useEffect(() => {
+    if (Object.keys(prefPlace).length === 0) getPrefLocation();
+
+    const willFocusSubscription = navigation.addListener("focus", () => {
+      getPrefLocation();
+    });
+
+    return willFocusSubscription;
+  }, []);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#dddddd"
+        hidden="false"
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Pocket Weather</Text>
@@ -103,17 +155,24 @@ export const PlacePickerScreen = ({ route }) => {
             />
           </View>
         </View>
-        <View style={styles.resultsContainer}>{placesResults()}</View>
+
+        {placesData.length > 0 ? (
+          <View style={styles.resultsContainer}>{placesResults()}</View>
+        ) : (
+          preferredPlace()
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: "#241B3A",
+  },
   container: {
     flexDirection: "column",
     height: "100%",
-    backgroundColor: "#241B3A",
     padding: 24,
   },
   header: {
@@ -139,6 +198,13 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "800",
     fontSize: 24,
+    color: "#ffffff",
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
+  subTitle: {
+    fontWeight: "600",
+    fontSize: 20,
     color: "#ffffff",
     paddingTop: 16,
     paddingBottom: 16,

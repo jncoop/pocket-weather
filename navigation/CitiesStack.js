@@ -1,8 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CitiesScreen from "../screens/CitiesScreen";
-import ForecastScreen from "../screens/ForecastScreen";
-import PlacePicker from "../screens/PlacePickerScreen";
 import { CityPickerScreen } from "../screens/CityPickerScreen";
 import { WeeklyForecast } from "../components/WeeklyForecast";
 import DetailsScreen from "../screens/DetailsScreen";

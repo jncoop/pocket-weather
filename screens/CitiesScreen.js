@@ -30,6 +30,7 @@ const CitiesScreen = ({ navigation }) => {
 
   const getCities = () => {
     AsyncStorage.getItem("@savedCities").then((storedCities) => {
+      console.log("stored cities ", storedCities);
       setCities(JSON.parse(storedCities));
     });
   };
