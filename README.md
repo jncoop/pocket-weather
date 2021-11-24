@@ -53,6 +53,13 @@ To run Pocket weather in development mode on your machine, you will first need t
    - For Android [visit the Google PlayStore](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
    - For iOS [visit the App Store](https://itunes.com/apps/exponent)
+   
+   Download the Expo Go app, and then use the CLI-displayed developer tools QR code to connect to the development server. 
+   
+   Alternatively, if you wish to run the app with an Android or iOS emulator, find further guidance below: 
+   
+   - [Android Emulator] (https://docs.expo.dev/workflow/android-studio-emulator/)
+   - [iOS Simulator] (https://docs.expo.dev/workflow/ios-simulator/)
 
 6. In the project directory, start the Expo server
 
@@ -63,7 +70,8 @@ To run Pocket weather in development mode on your machine, you will first need t
 7. To run the app on a device, follow the CLI instructions
 
    ```
-   Press a | open on Android
+   Scan QR code on device with Expo Go App ||
+   Press a | open on Android ||
    Press i | open on iOS
    ```
 
