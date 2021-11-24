@@ -5,8 +5,10 @@ import cellActiveArr from "../assets/cell-arrow-pri.png";
 import { convertUnixDateTime } from "../utils/DateConverter";
 import { capitalizeFirstLetter } from "../utils/CapitaliseString";
 
+//returns forecast cell
+
 export const ForecastCell = ({ item, location, id }) => {
-  const navigation = useNavigation(); // navigation hook
+  const navigation = useNavigation();
   const forecast = item;
   const forecastIcon = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
   const date = convertUnixDateTime(forecast.dt);

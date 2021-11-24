@@ -46,6 +46,10 @@ export const WeeklyForecast = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   searchBar: {
     height: 50,
     width: "100%",
