@@ -65,7 +65,9 @@ export const CityCell = ({ city, deleteCallback }) => {
           onPress={() => navigation.navigate("Forecast", { location: city })}
         >
           <View style={styles.placeContainer}>
-            <Text style={styles.placeText}>{city.name}</Text>
+            <Text style={styles.placeText}>
+              {city.name + ", " + city.country}
+            </Text>
           </View>
           <Image style={styles.cellArr} source={cellActiveArr} />
         </TouchableOpacity>

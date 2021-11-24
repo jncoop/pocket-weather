@@ -55,11 +55,31 @@ export const DetailsScreen = ({ route, navigation }) => {
               <Text style={styles.infoText}>{forecast.pressure} Pa</Text>
               <Text style={styles.infoTitle}>Pressure</Text>
             </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.wind_speed} m/s</Text>
+              <Text style={styles.infoTitle}>Wind Speed</Text>
+            </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.pop} %</Text>
+              <Text style={styles.infoTitle}>Precipitation</Text>
+            </View>
           </View>
           <View style={styles.column}>
             <View style={styles.gridCell}>
               <Text style={styles.infoText}>{forecast.uvi}</Text>
               <Text style={styles.infoTitle}>UVI</Text>
+            </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.wind_deg}°</Text>
+              <Text style={styles.infoTitle}>Wind direction</Text>
+            </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.wind_gust} m/s</Text>
+              <Text style={styles.infoTitle}>Wind Gust</Text>
+            </View>
+            <View style={styles.gridCell}>
+              <Text style={styles.infoText}>{forecast.clouds} %</Text>
+              <Text style={styles.infoTitle}>Cloud density</Text>
             </View>
           </View>
         </View>
@@ -159,13 +179,15 @@ const styles = StyleSheet.create({
     width: "90%",
     margin: "5%",
     borderRadius: 16,
-    aspectRatio: 1,
+    aspectRatio: 1.7,
+    // maxWidth: "50%",
+    padding: 32,
     justifyContent: "center",
     backgroundColor: "#261a3c",
   },
   infoText: {
     fontWeight: "700",
-    fontSize: 24,
+    fontSize: 22,
     color: "white",
     textAlign: "center",
   },
@@ -174,6 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     textAlign: "center",
+    padding: 4,
   },
   conditionImg: {
     height: 130,
