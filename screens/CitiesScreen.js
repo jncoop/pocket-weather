@@ -43,18 +43,25 @@ const CitiesScreen = ({ navigation }) => {
   };
 
   //updates cities store with cities state
-  const updateCities = async () => {
-    setStoreItem("@savedCities", cities).then((response) => {
+  const updateCities = async (cityArr) => {
+    setStoreItem("@savedCities", cityArr).then((response) => {
       if (!response) console.error("Error updating cities ", response);
+      return;
     });
+    return;
   };
 
   //removed city from cities
   const deleteCity = (delCity) => {
-    setCities((prevState) =>
-      prevState.filter((city) => city.name !== delCity.name)
-    );
-    updateCities();
+    console.log("delete city ", delCity);
+    console.log("cities before delete ", cities);
+
+    let updatedCities = cities.filter((city) => city.name !== delCity.name);
+
+    console.log("updatedCities after delete ", updateCities);
+    updateCities(updatedCities).then((res) => {
+      setCities(updatedCities);
+    });
   };
 
   useEffect(() => {

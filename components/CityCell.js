@@ -54,6 +54,11 @@ export const CityCell = ({ city, deleteCallback }) => {
   };
 
   return (
+
+    <Swipeable renderRightActions={swipeRight} rightThreshold={-200} onSwipeableOpen={animatedDelete}>
+
+
+
     <Swipeable
       renderRightActions={swipeRight}
       rightThreshold={-200}
