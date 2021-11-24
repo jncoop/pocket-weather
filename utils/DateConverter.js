@@ -1,6 +1,6 @@
 /**
- *
- * @param {number=} unixDateTime - string to capitalise
+ * Convert unix date time into custom date object
+ * @param {number} unixDateTime - string to capitalise
  * @return {object} custom date object
  **/
 

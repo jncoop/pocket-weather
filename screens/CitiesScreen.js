@@ -9,7 +9,7 @@ import {
 
 import addIcon from "../assets/add-icon.png";
 import { CityCell } from "../components/CityCell";
-import { getStoreItem, setStoreItem } from "../coordinators/AsyncStoreCoord";
+import { getStoreItem } from "../coordinators/AsyncStoreCoord";
 
 const CitiesScreen = ({ navigation }) => {
   const [cities, setCities] = useState([]);
@@ -42,21 +42,6 @@ const CitiesScreen = ({ navigation }) => {
       });
   };
 
-  //updates cities store with cities state
-  const updateCities = async () => {
-    setStoreItem("@savedCities", cities).then((response) => {
-      if (!response) console.error("Error updating cities ", response);
-    });
-  };
-
-  //removed city from cities
-  const deleteCity = (delCity) => {
-    setCities((prevState) =>
-      prevState.filter((city) => city.name !== delCity.name)
-    );
-    updateCities();
-  };
-
   useEffect(() => {
     getCities();
     //load cities on re-focus
@@ -72,9 +57,7 @@ const CitiesScreen = ({ navigation }) => {
       <FlatList
         data={cities}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <CityCell city={item} deleteCallback={deleteCity} />
-        )}
+        renderItem={({ item, index }) => <CityCell city={item} />}
         style={styles.resultsList}
       />
     </SafeAreaView>

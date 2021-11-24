@@ -1,83 +1,28 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import cellActiveArr from "../assets/cell-arrow-pri.png";
-import Swipeable from "react-native-gesture-handler/Swipeable";
 
 //returns cell showing city item with name and detail arrow
-export const CityCell = ({ city, deleteCallback }) => {
+export const CityCell = ({ city }) => {
   const navigation = useNavigation();
 
-  const swipeRight = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [-200, 0],
-      outputRange: [1, 0.5],
-      extrapolate: "clamp",
-    });
-    return (
-      <Animated.View
-        style={{
-          backgroundColor: "red",
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
-        <Animated.Text
-          style={{
-            marginLeft: "auto",
-            marginRight: 50,
-            fontSize: 15,
-            fontWeight: "bold",
-            transform: [{ scale }],
-          }}
-        >
-          Delete City
-        </Animated.Text>
-      </Animated.View>
-    );
-  };
-
-  const height = new Animated.Value(70);
-  const animatedDelete = () => {
-    Animated.timing(height, {
-      toValue: 0,
-      duration: 350,
-      useNativeDriver: false,
-    }).start(() => deleteCallback(city));
-  };
-
   return (
-    <Swipeable
-      renderRightActions={swipeRight}
-      rightThreshold={-200}
-      onSwipeableOpen={animatedDelete}
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate("Forecast", { location: city })}
     >
-      <Animated.View>
-        <TouchableOpacity
-          style={styles.container}
-          onPress={() => navigation.navigate("Forecast", { location: city })}
-        >
-          <View style={styles.placeContainer}>
-            <Text style={styles.placeText}>
-              {city.name + ", " + city.country}
-            </Text>
-          </View>
-          <Image style={styles.cellArr} source={cellActiveArr} />
-        </TouchableOpacity>
-      </Animated.View>
-    </Swipeable>
+      <View style={styles.placeContainer}>
+        <Text style={styles.placeText}>{city.name + ", " + city.country}</Text>
+      </View>
+      <Image style={styles.cellArr} source={cellActiveArr} />
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    minHeight: 100,
     backgroundColor: "#ffffff",
     flexDirection: "row",
     borderBottomWidth: StyleSheet.hairlineWidth,
